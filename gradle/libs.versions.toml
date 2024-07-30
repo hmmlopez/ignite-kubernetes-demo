@@ -1,0 +1,21 @@
+[versions]
+kotlinVersion = "2.0.0"
+springBootVersion = "3.3.2"
+igniteVersion = "2.16.0"
+spotlessVersion = "6.25.0"
+mockkVersion = "1.13.12"
+
+[libraries]
+ignite-spring = { module = "org.apache.ignite:ignite-spring", version.ref = "igniteVersion" }
+ignite-slf4j = { module = "org.apache.ignite:ignite-slf4j", version.ref = "igniteVersion" }
+ignite-kubernetes = { module = "org.apache.ignite:ignite-kubernetes", version.ref = "igniteVersion" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockkVersion" }
+
+[bundles]
+ignite = ["ignite.spring", "ignite.slf4j", "ignite.kubernetes"]
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
+kotlinSpring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlinVersion" }
+springBoot = { id = "org.springframework.boot", version.ref = "springBootVersion" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotlessVersion" }
