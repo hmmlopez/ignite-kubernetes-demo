@@ -55,5 +55,6 @@ jib {
         )
         ports = listOf("10800", "8080")
         creationTime.set(OffsetDateTime.now().toString())
+        mainClass = "nl.ignite.kubernetes.demo.client.ClientApplication.Kt"
     }
 }
