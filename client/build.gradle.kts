@@ -2,7 +2,7 @@ plugins {
     jacoco
     alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlinSpring)
-    alias(libs.plugins.springBoot) apply false
+    alias(libs.plugins.springBoot) apply true
 }
 
 dependencies {
