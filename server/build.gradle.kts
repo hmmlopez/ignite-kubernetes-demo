@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlinSpring)
     alias(libs.plugins.springBoot) apply true
+//    alias(libs.plugins.jib)
 }
 
 dependencies {
