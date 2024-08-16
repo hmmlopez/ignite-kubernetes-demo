@@ -1,0 +1,6 @@
+dependencies:
+- name: ignite-client
+  repository: file://../ignite-client
+  version: 0.1.0
+digest: sha256:4161386cedc44dd55404d2aead36a7c58386fa67a05e88d288ae1758c5df967e
+generated: "2024-08-09T12:48:26.668351502+02:00"
