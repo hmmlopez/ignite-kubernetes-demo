@@ -13,7 +13,7 @@ ignite-kubernetes = { module = "org.apache.ignite:ignite-kubernetes", version.re
 mockk = { module = "io.mockk:mockk", version.ref = "mockkVersion" }
 
 [bundles]
-ignite = ["ignite.spring", "ignite.slf4j", "ignite.kubernetes"]
+ignite = ["ignite-spring", "ignite-slf4j", "ignite-kubernetes"]
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
