@@ -9,7 +9,9 @@ dependencies {
     annotationProcessor(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
-    api(libs.bundles.ignite)
+    api(libs.bundles.ignite) {
+        exclude(module = "commons-logging")
+    }
 
     implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
 //    implementation("io.micrometer:micrometer-registry-prometheus")
