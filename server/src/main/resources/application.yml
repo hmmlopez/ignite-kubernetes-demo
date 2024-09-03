@@ -1,0 +1,12 @@
+management:
+  endpoint:
+    env:
+      show-values: always
+    configprops:
+      show-values: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+    port: 8081

@@ -16,6 +16,7 @@ class ServerApplicationTest {
     fun contextLoads() {
         SoftAssertions.assertSoftly {
             it.assertThat(ignite).isNotNull
+            it.assertThat(ignite.cluster().localNode().isClient).isFalse
         }
     }
 }
