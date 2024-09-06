@@ -2,7 +2,6 @@ package nl.ignite.kubernetes.demo.common.config
 
 import org.apache.ignite.configuration.IgniteConfiguration
 import org.apache.ignite.logger.slf4j.Slf4jLogger
-import org.apache.ignite.spi.discovery.DiscoverySpi
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi
 import org.apache.ignite.spi.discovery.tcp.ipfinder.TcpDiscoveryIpFinder
 import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder
@@ -21,9 +20,6 @@ class IgniteConfigTest {
     private lateinit var igniteConfiguration: IgniteConfiguration
 
     @Autowired
-    private lateinit var discoverySpi: DiscoverySpi
-
-    @Autowired
     private lateinit var ipFinder: TcpDiscoveryIpFinder
 
     @Test
@@ -32,14 +28,8 @@ class IgniteConfigTest {
             it.assertThat(igniteConfiguration).isNotNull
             it.assertThat(igniteConfiguration.gridLogger).isInstanceOf(Slf4jLogger::class.java)
             it.assertThat(igniteConfiguration.metricsLogFrequency).isEqualTo(0)
-        }
-    }
-
-    @Test
-    fun discoverySpi() {
-        SoftAssertions.assertSoftly {
-            it.assertThat(discoverySpi).isNotNull
-            it.assertThat(discoverySpi).isInstanceOf(TcpDiscoverySpi::class.java)
+            it.assertThat(igniteConfiguration.discoverySpi).isNotNull
+            it.assertThat(igniteConfiguration.discoverySpi).isInstanceOf(TcpDiscoverySpi::class.java)
         }
     }
 

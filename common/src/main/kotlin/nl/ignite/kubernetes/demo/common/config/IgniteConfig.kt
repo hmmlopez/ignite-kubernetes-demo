@@ -1,9 +1,9 @@
 package nl.ignite.kubernetes.demo.common.config
 
+import org.apache.ignite.configuration.DataStorageConfiguration
 import org.apache.ignite.configuration.IgniteConfiguration
 import org.apache.ignite.kubernetes.configuration.KubernetesConnectionConfiguration
 import org.apache.ignite.logger.slf4j.Slf4jLogger
-import org.apache.ignite.spi.discovery.DiscoverySpi
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi
 import org.apache.ignite.spi.discovery.tcp.ipfinder.TcpDiscoveryIpFinder
 import org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder
@@ -19,18 +19,16 @@ import java.nio.file.Paths
 class IgniteConfig {
 
     @Bean
-    fun defaultIgniteConfiguration(discoverySpi: DiscoverySpi) =
+    @ConfigurationProperties("ignite")
+    fun defaultIgniteConfiguration(ipFinder: TcpDiscoveryIpFinder) =
         IgniteConfiguration().apply {
             this.gridLogger = Slf4jLogger()
             this.metricsLogFrequency = 0
             this.igniteHome = Paths.get(".").toAbsolutePath().toString()
-            this.discoverySpi = discoverySpi
-        }
-
-    @Bean
-    fun discoverySpi(ipFinder: TcpDiscoveryIpFinder) =
-        TcpDiscoverySpi().apply {
-            this.ipFinder = ipFinder
+            this.discoverySpi = TcpDiscoverySpi().apply {
+                this.ipFinder = ipFinder
+            }
+            this.dataStorageConfiguration = DataStorageConfiguration()
         }
 
     @Bean
