@@ -4,9 +4,19 @@ management:
       show-values: always
     configprops:
       show-values: always
+    health:
+      probes:
+        enabled: true
+      show-details: always
   endpoints:
     web:
       exposure:
         include: "*"
   server:
     port: 8081
+
+ignite:
+  discovery:
+    local:
+     ip-finder:
+       addresses: "localhost:47500..47510"

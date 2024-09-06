@@ -1,0 +1,6 @@
+ignite:
+  discovery:
+    kubernetes:
+      configuration:
+        namespace: ignite-dev
+        service-name: ignite-kubernetes-service
