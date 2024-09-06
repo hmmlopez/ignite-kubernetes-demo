@@ -3,14 +3,14 @@ kotlinVersion = "2.0.20"
 springBootVersion = "3.3.3"
 igniteVersion = "2.16.0"
 spotlessVersion = "6.25.0"
-mockkVersion = "1.13.12"
+springmockkVersion = "4.0.2"
 jibVersion = "3.4.3"
 
 [libraries]
 ignite-spring = { module = "org.apache.ignite:ignite-spring", version.ref = "igniteVersion" }
 ignite-slf4j = { module = "org.apache.ignite:ignite-slf4j", version.ref = "igniteVersion" }
 ignite-kubernetes = { module = "org.apache.ignite:ignite-kubernetes", version.ref = "igniteVersion" }
-mockk = { module = "io.mockk:mockk", version.ref = "mockkVersion" }
+spring-mockk = { module = "com.ninja-squad:springmockk", version.ref = "springmockkVersion" }
 
 [bundles]
 ignite = ["ignite-spring", "ignite-slf4j", "ignite-kubernetes"]

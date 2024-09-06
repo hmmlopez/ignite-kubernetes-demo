@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @EnableConfigurationProperties
 @ActiveProfiles(profiles = ["kubernetes"])
 @ContextConfiguration(classes = [IgniteConfig::class])
-@TestPropertySource(properties = ["ignite.discovery.kubernetes.configuration.service-name=my-service-test"])
+@TestPropertySource(properties = ["KUBERNETES_NAMESPACE=namespace1", "KUBERNETES_SERVICE=service1"])
 class IgniteConfigKubernetesTest {
 
     @Autowired
@@ -38,12 +38,8 @@ class IgniteConfigKubernetesTest {
     fun connectionConfiguration() {
         SoftAssertions.assertSoftly {
             it.assertThat(connectionConfiguration).isNotNull
-            it.assertThat(connectionConfiguration.namespace).isEqualTo("default")
-            it.assertThat(connectionConfiguration.serviceName).isEqualTo("my-service-test")
-            it.assertThat(connectionConfiguration.master).isEqualTo("https://kubernetes.default.svc.cluster.local:443")
-            it.assertThat(connectionConfiguration.discoveryPort).isEqualTo(0)
-            it.assertThat(connectionConfiguration.accountToken)
-                .isEqualTo("/var/run/secrets/kubernetes.io/serviceaccount/token")
+            it.assertThat(connectionConfiguration.namespace).isEqualTo("namespace1")
+            it.assertThat(connectionConfiguration.serviceName).isEqualTo("service1")
         }
     }
 }

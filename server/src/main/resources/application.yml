@@ -19,4 +19,4 @@ ignite:
   discovery:
     local:
      ip-finder:
-       addresses: "localhost:47500..47510"
+       addresses: "localhost:47500..47509"

@@ -7,8 +7,8 @@ import org.apache.ignite.spi.discovery.DiscoverySpi
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi
 import org.apache.ignite.spi.discovery.tcp.ipfinder.TcpDiscoveryIpFinder
 import org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder
-import org.apache.ignite.spi.discovery.tcp.ipfinder.multicast.TcpDiscoveryMulticastIpFinder
 import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,41 +19,38 @@ import java.nio.file.Paths
 class IgniteConfig {
 
     @Bean
-    fun defaultIgniteConfiguration(discoverySpi: DiscoverySpi): IgniteConfiguration {
-        return IgniteConfiguration().apply {
+    fun defaultIgniteConfiguration(discoverySpi: DiscoverySpi) =
+        IgniteConfiguration().apply {
             this.gridLogger = Slf4jLogger()
             this.metricsLogFrequency = 0
             this.igniteHome = Paths.get(".").toAbsolutePath().toString()
             this.discoverySpi = discoverySpi
         }
-    }
 
     @Bean
-    fun discoverySpi(ipFinder: TcpDiscoveryIpFinder): DiscoverySpi {
-        return TcpDiscoverySpi().apply {
+    fun discoverySpi(ipFinder: TcpDiscoveryIpFinder) =
+        TcpDiscoverySpi().apply {
             this.ipFinder = ipFinder
         }
-    }
 
     @Bean
     @Profile("!kubernetes")
     @ConfigurationProperties(prefix = "ignite.discovery.local.ip-finder")
-    fun tcpDiscoveryVmFinder(): TcpDiscoveryIpFinder {
-//        return TcpDiscoveryVmIpFinder()
-        return TcpDiscoveryMulticastIpFinder()
-    }
+    fun tcpDiscoveryVmFinder() = TcpDiscoveryVmIpFinder()
 
     @Bean
     @Profile("kubernetes")
-    fun tcpDiscoveryKubernetesIpFinder(configuration: KubernetesConnectionConfiguration): TcpDiscoveryIpFinder {
-        return TcpDiscoveryKubernetesIpFinder(configuration)
-    }
+    fun tcpDiscoveryKubernetesIpFinder(configuration: KubernetesConnectionConfiguration) =
+        TcpDiscoveryKubernetesIpFinder(configuration)
 
     @Bean
     @Profile("kubernetes")
-    @ConfigurationProperties(prefix = "ignite.discovery.kubernetes.configuration")
-    fun kubernetesConnectionConfiguration() : KubernetesConnectionConfiguration {
-        return KubernetesConnectionConfiguration()
+    fun kubernetesConnectionConfiguration(
+        @Value("\${KUBERNETES_NAMESPACE:default}") namespace: String,
+        @Value("\${KUBERNETES_SERVICE:ignite}") serviceName: String
+    ) = KubernetesConnectionConfiguration().apply {
+        this.namespace = namespace
+        this.serviceName = serviceName
     }
 
 }

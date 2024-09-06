@@ -6,16 +6,20 @@ import org.apache.ignite.configuration.IgniteConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
+import java.lang.management.ManagementFactory
+import javax.management.MBeanServer
 
 @Configuration
 @Import(IgniteConfig::class)
 class AppConfig {
 
     @Bean
-    fun igniteSpringBean(igniteConfiguration: IgniteConfiguration) :IgniteSpringBean {
-        return IgniteSpringBean().apply {
+    fun igniteSpringBean(igniteConfiguration: IgniteConfiguration) =
+        IgniteSpringBean().apply {
             configuration = igniteConfiguration
         }
-    }
+
+    @Bean
+    fun mbeanServer(): MBeanServer = ManagementFactory.getPlatformMBeanServer()
 
 }

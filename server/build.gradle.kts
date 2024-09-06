@@ -28,7 +28,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(module = "mockito-core")
     }
-    testImplementation(libs.mockk)
+    testImplementation(libs.spring.mockk)
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

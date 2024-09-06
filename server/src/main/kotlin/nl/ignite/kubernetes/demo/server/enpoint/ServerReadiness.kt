@@ -12,17 +12,15 @@ import org.springframework.boot.availability.AvailabilityState
 import org.springframework.boot.availability.ReadinessState
 import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Component
-import java.lang.management.ManagementFactory
 import javax.management.MBeanServer
 import javax.management.ObjectName
 
 @Component
 @Endpoint(id = "readiness", enableByDefault = true)
-class ServerReadiness(availability: ApplicationAvailability, val context: ApplicationContext) : ReadinessStateHealthIndicator(availability) {
+class ServerReadiness(availability: ApplicationAvailability, val context: ApplicationContext, val mBeanServer: MBeanServer) : ReadinessStateHealthIndicator(availability) {
 
     val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
-    val mBeanServer: MBeanServer = ManagementFactory.getPlatformMBeanServer()
     val searchableObjectName: ObjectName = ObjectName.getInstance("org.apache:clsLdr=*,name=cluster,*")
     val attribute = "Rebalanced"
     var isRebalanced = false
@@ -36,8 +34,9 @@ class ServerReadiness(availability: ApplicationAvailability, val context: Applic
         if (!isRebalanced) {
             queryMBeanServer()
         }
-        logger.info("getState: ${applicationAvailability.readinessState}")
-        return applicationAvailability.readinessState
+        val readinessState = applicationAvailability.readinessState
+        logger.info("getState: $readinessState")
+        return readinessState
     }
 
     private fun queryMBeanServer() {

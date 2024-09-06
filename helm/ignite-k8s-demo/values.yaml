@@ -2,16 +2,19 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-#ignite-server:
-#  replicaCount: 1
-#  image:
-#    repository: localhost:32000/ignite-server
-#    tag: "0.1.0-SNAPSHOT"
-#  fullnameOverride: "ignite-server-node"
-#  serviceAccount:
-#    create: false
-#  service:
-#    port: 8080
+ignite-server:
+  replicaCount: 1
+  image:
+    repository: localhost:32000/ignite-server
+    pullPolicy: Always
+    tag: "latest"
+  fullnameOverride: "ignite-server-node"
+  serviceAccount:
+    create: true
+    name: ignite-sa
+  service:
+    management: 8081
+    port: 8080
 
 ignite-client:
   replicaCount: 1
@@ -23,5 +26,5 @@ ignite-client:
   serviceAccount:
     create: false
   service:
-    type: NodePort
+    management: 8081
     port: 8080
