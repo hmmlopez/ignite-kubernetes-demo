@@ -20,3 +20,7 @@ ignite:
     local:
      ip-finder:
        addresses: "localhost:47500..47509"
+  dataStorageConfiguration:
+    defaultDataRegionConfiguration:
+      initialSize: 268435456
+      maxSize: 1073741824
