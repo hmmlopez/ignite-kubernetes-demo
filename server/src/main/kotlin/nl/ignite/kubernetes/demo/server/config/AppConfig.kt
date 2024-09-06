@@ -11,11 +11,11 @@ import org.springframework.context.annotation.Import
 @Import(IgniteConfig::class)
 class AppConfig {
 
-//    @Bean
-//    fun igniteSpringBean(igniteConfiguration: IgniteConfiguration) :IgniteSpringBean {
-//        return IgniteSpringBean().apply {
-//            configuration = igniteConfiguration
-//        }
-//    }
+    @Bean
+    fun igniteSpringBean(igniteConfiguration: IgniteConfiguration) :IgniteSpringBean {
+        return IgniteSpringBean().apply {
+            configuration = igniteConfiguration
+        }
+    }
 
 }
