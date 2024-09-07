@@ -18,6 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
+        app: ignite-pod
         {{- include "ignite-client.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -33,18 +34,38 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "kubernetes"
+            - name: KUBERNETES_NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: KUBERNETES_SERVICE
+              value: "ignite-service"
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
+            - name: management
+              containerPort: {{ .Values.service.management }}
               protocol: TCP
+            - name: http
+              containerPort: {{ .Values.service.rest }}
+              protocol: TCP
+            - containerPort: 47100 # communication SPI port
+            - containerPort: 47500 # discovery SPI port
+            - containerPort: 49112 # dafault JMX port
+            - containerPort: 10800 # thin clients/JDBC driver port
           livenessProbe:
+            initialDelaySeconds: 10
+            failureThreshold: 30
+            periodSeconds: 10
             httpGet:
-              path: /
-              port: http
+              path: /actuator/health/liveness
+              port: management
           readinessProbe:
+            initialDelaySeconds: 10
+            failureThreshold: 30
+            periodSeconds: 10
             httpGet:
-              path: /
-              port: http
+              path: /actuator/health/readiness
+              port: management
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

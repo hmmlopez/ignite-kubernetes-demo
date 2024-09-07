@@ -1,4 +1,4 @@
-# Default values for ignite-client.
+# Default values for ignite-service.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -38,8 +38,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  management: 8081
-  rest: 8080
+  thinClients: 10800
 
 ingress:
   enabled: false

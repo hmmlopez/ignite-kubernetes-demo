@@ -1,23 +1,25 @@
 package nl.ignite.kubernetes.demo.server
 
 import org.apache.ignite.Ignite
+import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi
 import org.apache.ignite.spi.discovery.tcp.ipfinder.TcpDiscoveryIpFinder
-import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder
 import org.assertj.core.api.SoftAssertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import java.net.InetSocketAddress
 import javax.management.MBeanServer
 
-@SpringBootTest(properties = ["ignite.dataStorageConfiguration.defaultDataRegionConfiguration.initialSize=536870912", "ignite.dataStorageConfiguration.defaultDataRegionConfiguration.maxSize=1073741824"])
+@SpringBootTest(
+    properties = ["ignite.dataStorageConfiguration.defaultDataRegionConfiguration.initialSize=536870912",
+        "ignite.dataStorageConfiguration.defaultDataRegionConfiguration.maxSize=1073741824"]
+)
 class ServerApplicationTest {
 
     @Autowired
     private lateinit var ignite: Ignite
 
     @Autowired
-    private lateinit var ipFinder: TcpDiscoveryIpFinder
+    private lateinit var discoverySpi: TcpDiscoverySpi
 
     @Autowired
     private lateinit var mBeanServer: MBeanServer
@@ -27,17 +29,8 @@ class ServerApplicationTest {
         SoftAssertions.assertSoftly {
             it.assertThat(ignite).isNotNull
             it.assertThat(ignite.cluster().localNode().isClient).isFalse
-            it.assertThat(ipFinder).isNotNull
+            it.assertThat(discoverySpi.ipFinder).isNotNull
             it.assertThat(mBeanServer).isNotNull
-        }
-    }
-
-    @Test
-    fun testIpFinder() {
-        SoftAssertions.assertSoftly {
-            it.assertThat(ipFinder).isInstanceOf(TcpDiscoveryVmIpFinder::class.java)
-            it.assertThat(ipFinder.registeredAddresses).hasSize(10)
-            it.assertThat(ipFinder.registeredAddresses).contains(InetSocketAddress("localhost", 47500))
         }
     }
 

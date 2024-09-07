@@ -2,7 +2,7 @@
 ### creates a new helm chart
 `helm create <application>`
 ### adds dependencies to the chart
-`helm dependency update <helm-chart-location> (-n <namespace>)`
+`helm dependency update <helm-chart-location>`
 ### installs the chart (if no namespace is defined it will install in default namespace)
 `helm install <release-name> <chart> (-n <namespace> --create-namespace)`
 ### upgrades the release
@@ -17,3 +17,5 @@
 `kubectl logs pod/<pod-name> (-n <namespace>)`
 ### forwards a port from localhost to the service / pod
 `kubectl port-forward svc/<service> <local-port>:<service-port> (-n <namespace>)`
+### Create token for headlamp
+`kubectl create token my-headlamp -n headlamp`

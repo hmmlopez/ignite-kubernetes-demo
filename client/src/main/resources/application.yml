@@ -14,9 +14,3 @@ management:
         include: "*"
   server:
     port: 8081
-
-ignite:
-  dataStorageConfiguration:
-    defaultDataRegionConfiguration:
-      initialSize: 268435456
-      maxSize: 1073741824

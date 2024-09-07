@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Helm ###
+/helm/*/*.lock
+helm/ignite-k8s-demo/charts/*.tgz

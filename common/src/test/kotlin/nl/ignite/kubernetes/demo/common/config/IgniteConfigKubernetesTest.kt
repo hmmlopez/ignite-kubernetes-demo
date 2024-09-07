@@ -1,7 +1,7 @@
 package nl.ignite.kubernetes.demo.common.config
 
 import org.apache.ignite.kubernetes.configuration.KubernetesConnectionConfiguration
-import org.apache.ignite.spi.discovery.tcp.ipfinder.TcpDiscoveryIpFinder
+import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi
 import org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder
 import org.assertj.core.api.SoftAssertions
 import org.junit.jupiter.api.Test
@@ -21,7 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 class IgniteConfigKubernetesTest {
 
     @Autowired
-    private lateinit var ipFinder: TcpDiscoveryIpFinder
+    private lateinit var discoverySpi: TcpDiscoverySpi
 
     @Autowired
     private lateinit var connectionConfiguration: KubernetesConnectionConfiguration
@@ -29,8 +29,8 @@ class IgniteConfigKubernetesTest {
     @Test
     fun ipFinder() {
         SoftAssertions.assertSoftly {
-            it.assertThat(ipFinder).isNotNull
-            it.assertThat(ipFinder).isInstanceOf(TcpDiscoveryKubernetesIpFinder::class.java)
+            it.assertThat(discoverySpi.ipFinder).isNotNull
+            it.assertThat(discoverySpi.ipFinder).isInstanceOf(TcpDiscoveryKubernetesIpFinder::class.java)
         }
     }
 

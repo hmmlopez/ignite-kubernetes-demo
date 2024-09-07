@@ -18,6 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
+        app: ignite-pod
         {{- include "ignite-server.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -39,13 +40,13 @@ spec:
             - name: KUBERNETES_NAMESPACE
               value: {{ .Release.Namespace }}
             - name: KUBERNETES_SERVICE
-              value: {{ include "ignite-server.fullname" . }}
+              value: "ignite-service"
           ports:
             - name: management
               containerPort: {{ .Values.service.management }}
               protocol: TCP
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.rest }}
               protocol: TCP
             - containerPort: 47100 # communication SPI port
             - containerPort: 47500 # discovery SPI port

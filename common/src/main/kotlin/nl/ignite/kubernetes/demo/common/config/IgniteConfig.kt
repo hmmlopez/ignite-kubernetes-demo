@@ -5,7 +5,6 @@ import org.apache.ignite.configuration.IgniteConfiguration
 import org.apache.ignite.kubernetes.configuration.KubernetesConnectionConfiguration
 import org.apache.ignite.logger.slf4j.Slf4jLogger
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi
-import org.apache.ignite.spi.discovery.tcp.ipfinder.TcpDiscoveryIpFinder
 import org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder
 import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder
 import org.springframework.beans.factory.annotation.Value
@@ -20,26 +19,34 @@ class IgniteConfig {
 
     @Bean
     @ConfigurationProperties("ignite")
-    fun defaultIgniteConfiguration(ipFinder: TcpDiscoveryIpFinder) =
+    fun defaultIgniteConfiguration(discoverySpi: TcpDiscoverySpi) =
         IgniteConfiguration().apply {
             this.gridLogger = Slf4jLogger()
             this.metricsLogFrequency = 0
             this.igniteHome = Paths.get(".").toAbsolutePath().toString()
-            this.discoverySpi = TcpDiscoverySpi().apply {
-                this.ipFinder = ipFinder
-            }
+            this.discoverySpi = discoverySpi
             this.dataStorageConfiguration = DataStorageConfiguration()
         }
 
     @Bean
     @Profile("!kubernetes")
-    @ConfigurationProperties(prefix = "ignite.discovery.local.ip-finder")
-    fun tcpDiscoveryVmFinder() = TcpDiscoveryVmIpFinder()
+    fun discoverySpi() = TcpDiscoverySpi().apply {
+        this.localAddress = "localhost"
+        this.localPort = 47500
+        this.localPortRange = 10
+        this.ipFinder = TcpDiscoveryVmIpFinder().apply {
+            this.setAddresses(listOf("localhost:47500..47509"))
+        }
+    }
 
     @Bean
     @Profile("kubernetes")
-    fun tcpDiscoveryKubernetesIpFinder(configuration: KubernetesConnectionConfiguration) =
-        TcpDiscoveryKubernetesIpFinder(configuration)
+    fun kubernetesDiscoverySpi(configuration: KubernetesConnectionConfiguration) = TcpDiscoverySpi().apply {
+        this.localAddress = "0.0.0.0"
+        this.localPort = 47500
+        this.localPortRange = 10
+        this.ipFinder = TcpDiscoveryKubernetesIpFinder(configuration)
+    }
 
     @Bean
     @Profile("kubernetes")
