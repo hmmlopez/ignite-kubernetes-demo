@@ -81,7 +81,9 @@ tasks{
         enabled = false
     }
     withType<Test> {
-        useJUnitPlatform()
+        useJUnitPlatform {
+            workingDir = layout.buildDirectory.asFile.get()
+        }
         jvmArgs = listOf(
             "-Xms512m",
             "-Xmx512m",

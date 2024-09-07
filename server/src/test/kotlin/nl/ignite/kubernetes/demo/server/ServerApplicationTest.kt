@@ -2,7 +2,6 @@ package nl.ignite.kubernetes.demo.server
 
 import org.apache.ignite.Ignite
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi
-import org.apache.ignite.spi.discovery.tcp.ipfinder.TcpDiscoveryIpFinder
 import org.assertj.core.api.SoftAssertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
