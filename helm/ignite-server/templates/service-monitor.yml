@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "ignite-server.fullname" . }}
+  labels:
+    release: kube-prom-stack
+spec:
+  endpoints:
+    - path: /actuator/prometheus  # pad waar metrics op te halen zijn
+      port: management            # naam van port in service
+  selector:
+    matchLabels:                  # labels op de service
+      {{- include "ignite-server.labels" . | nindent 6 }}

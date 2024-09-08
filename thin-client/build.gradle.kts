@@ -1,11 +1,8 @@
-import java.time.OffsetDateTime
-
 plugins {
     jacoco
     alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlinSpring)
     alias(libs.plugins.springBoot) apply true
-    alias(libs.plugins.jib)
 }
 
 dependencies {
@@ -18,6 +15,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation(libs.faker)
 
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
@@ -61,22 +59,6 @@ val jvmParameters = listOf(
     "--add-opens=java.management/sun.management=ALL-UNNAMED",
     "--add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
 )
-
-jib {
-    from {
-        image = "bellsoft/liberica-openjdk-alpine:22"
-    }
-    to {
-        image = "localhost:32000/ignite-client"
-    }
-    setAllowInsecureRegistries(true)
-    container {
-        jvmFlags = jvmParameters
-        ports = listOf("10800", "8080")
-        creationTime.set(OffsetDateTime.now().toString())
-        mainClass = "nl.ignite.kubernetes.demo.client.ClientApplicationKt"
-    }
-}
 
 tasks{
     named<Jar>("jar") {

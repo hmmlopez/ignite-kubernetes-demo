@@ -7,9 +7,9 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.rest }}
-      targetPort: {{ .Values.service.rest }}
+    - port: {{ .Values.service.management }}
+      targetPort: {{ .Values.service.management }}
       protocol: TCP
-      name: http
+      name: management
   selector:
     {{- include "ignite-server.selectorLabels" . | nindent 4 }}

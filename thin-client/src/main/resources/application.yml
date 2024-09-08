@@ -1,0 +1,3 @@
+ignite:
+  client-configuration:
+    addresses: "10.1.6.126:10800, 10.1.6.67:10800"
