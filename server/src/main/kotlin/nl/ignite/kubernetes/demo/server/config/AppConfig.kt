@@ -14,10 +14,9 @@ import javax.management.MBeanServer
 class AppConfig {
 
     @Bean
-    fun igniteSpringBean(igniteConfiguration: IgniteConfiguration) =
-        IgniteSpringBean().apply {
-            configuration = igniteConfiguration
-        }
+    fun igniteSpringBean(igniteConfiguration: IgniteConfiguration) = IgniteSpringBean().apply {
+        configuration = igniteConfiguration.apply { rebalanceThreadPoolSize = 1 }
+    }
 
     @Bean
     fun mbeanServer(): MBeanServer = ManagementFactory.getPlatformMBeanServer()
