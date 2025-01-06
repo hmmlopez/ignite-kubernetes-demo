@@ -1,4 +1,4 @@
-package nl.ignite.kubernetes.demo.server.enpoint
+package nl.ignite.kubernetes.demo.server.endpoint
 
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
