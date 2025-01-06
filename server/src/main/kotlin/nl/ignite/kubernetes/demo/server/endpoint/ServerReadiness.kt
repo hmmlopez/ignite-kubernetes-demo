@@ -1,8 +1,9 @@
-package nl.ignite.kubernetes.demo.server.enpoint
+package nl.ignite.kubernetes.demo.server.endpoint
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.actuate.availability.ReadinessStateHealthIndicator
+import org.springframework.boot.actuate.endpoint.Access
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation
 import org.springframework.boot.actuate.health.Health
@@ -16,7 +17,7 @@ import javax.management.MBeanServer
 import javax.management.ObjectName
 
 @Component
-@Endpoint(id = "readiness", enableByDefault = true)
+@Endpoint(id = "readiness", defaultAccess = Access.READ_ONLY)
 class ServerReadiness(availability: ApplicationAvailability, val context: ApplicationContext, val mBeanServer: MBeanServer) : ReadinessStateHealthIndicator(availability) {
 
     val logger: Logger = LoggerFactory.getLogger(this::class.java)
