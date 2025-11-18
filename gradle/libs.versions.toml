@@ -4,7 +4,7 @@ springBootVersion = "3.5.7"
 igniteVersion = "2.17.0"
 spotlessVersion = "8.0.0"
 springmockkVersion = "4.0.2"
-jibVersion = "3.5.0"
+jibVersion = "3.5.1"
 fakerVersion = "1.16.0"
 
 [libraries]
