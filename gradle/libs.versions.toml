@@ -2,7 +2,7 @@
 kotlinVersion = "2.3.0"
 springBootVersion = "4.0.2"
 igniteVersion = "2.17.0"
-spotlessVersion = "8.2.0"
+spotlessVersion = "8.2.1"
 springmockkVersion = "5.0.1"
 jibVersion = "3.5.2"
 fakerVersion = "1.16.0"
