@@ -1,6 +1,6 @@
 [versions]
 kotlinVersion = "2.3.10"
-springBootVersion = "4.0.2"
+springBootVersion = "4.0.3"
 igniteVersion = "2.17.0"
 spotlessVersion = "8.2.1"
 springmockkVersion = "5.0.1"
