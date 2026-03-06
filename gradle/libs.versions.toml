@@ -5,7 +5,7 @@ igniteVersion = "2.17.0"
 spotlessVersion = "8.3.0"
 springmockkVersion = "5.0.1"
 jibVersion = "3.5.3"
-fakerVersion = "1.16.0"
+fakerVersion = "1.16.1"
 
 [libraries]
 ignite-spring = { module = "org.apache.ignite:ignite-spring", version.ref = "igniteVersion" }
