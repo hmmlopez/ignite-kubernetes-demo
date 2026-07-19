@@ -1,5 +1,5 @@
 [versions]
-kotlinVersion = "2.3.21"
+kotlinVersion = "2.4.10"
 springBootVersion = "4.1.0"
 igniteVersion = "2.18.0"
 spotlessVersion = "8.8.0"
