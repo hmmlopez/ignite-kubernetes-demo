@@ -64,7 +64,7 @@ val jvmParameters = listOf(
 
 jib {
     from {
-        image = "bellsoft/liberica-openjre-alpine:24"
+        image = "bellsoft/liberica-openjre-alpine:25"
     }
     to {
         image = "localhost:32000/ignite-client"

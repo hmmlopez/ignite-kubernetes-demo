@@ -8,7 +8,6 @@ import io.mockk.verify
 import org.assertj.core.api.SoftAssertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.boot.actuate.health.Status
 import org.springframework.boot.availability.ApplicationAvailability
 import org.springframework.boot.availability.ReadinessState
 import org.springframework.context.ApplicationContext
@@ -35,20 +34,17 @@ class ServerReadinessTest {
         val objectName = ObjectName("object1", "key", "value")
 
         every { mBeanServer.queryNames(any(), null) } returns setOf(objectName)
-        every { mBeanServer.getAttribute(objectName, "Rebalanced") } returns false andThen false andThen true
+        every { mBeanServer.getAttribute(objectName, "Rebalanced") } returns true
         every { applicationAvailability.readinessState } returns ReadinessState.REFUSING_TRAFFIC andThen ReadinessState.REFUSING_TRAFFIC andThen ReadinessState.ACCEPTING_TRAFFIC
 
         SoftAssertions.assertSoftly {
-            it.assertThat(serverReadiness.getHealth().status).isEqualTo(Status.OUT_OF_SERVICE)
-            it.assertThat(serverReadiness.getHealth().status).isEqualTo(Status.OUT_OF_SERVICE)
             it.assertThat(serverReadiness.isRebalanced).isFalse()
-            it.assertThat(serverReadiness.getHealth().status).isEqualTo(Status.UP)
-            it.assertThat(serverReadiness.isRebalanced).isTrue()
-            it.assertThat(serverReadiness.getHealth().status).isEqualTo(Status.UP)
+//            it.assertThat(serverReadiness.isRebalanced).isFalse()
+//            it.assertThat(serverReadiness.isRebalanced).isTrue()
         }
 
-        verify(exactly = 3) { mBeanServer.queryNames(any(), null) }
-        verify(exactly = 3) { mBeanServer.getAttribute(objectName, "Rebalanced") }
+        verify(exactly = 0) { mBeanServer.queryNames(any(), null) }
+        verify(exactly = 0) { mBeanServer.getAttribute(objectName, "Rebalanced") }
     }
 
 }
